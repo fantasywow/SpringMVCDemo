@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserDao {
 
-    @Select("select customer_name from customer where email= #{email}")
+    @Select("select name from customer where email= #{email}")
     String queryUserNameByEmail(@Param("email") String email);
 
     User queryUserInfoByEmail(@Param("email") String email);

@@ -1,0 +1,1 @@
+insert into customer values ('123','liu','test@test.com')

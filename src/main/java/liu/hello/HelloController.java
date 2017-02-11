@@ -23,11 +23,11 @@ public class HelloController {
 
     @RequestMapping("/world")
     public String hello(Model model) {
-        String email = "sam@balabala.com";
+        logger.debug("hell begin");
+        String email = "test@test.com";
         String name = userDao.queryUserNameByEmail(email);
         User user = userDao.queryUserInfoByEmail(email);
 
-        logger.debug("you have been here !");
         model.addAttribute("hello", "您好! " + name);
         model.addAttribute("world", "everything is " + user.getUserId());
         return "hello";
@@ -35,8 +35,8 @@ public class HelloController {
 
     @RequestMapping("/test")
     public String test(Model model){
-        logger.debug(">>>>>>>>我就测试下日志 debug  <<<<<<<<<");
-        logger.info(">>>>>>>> 我就测试下日志 info   <<<<<<<<<");
+        logger.debug("test debug");
+        logger.info("test info");
         model.addAttribute("hello", "您好! test");
         model.addAttribute("world", "everything is id");
         return "hello";
