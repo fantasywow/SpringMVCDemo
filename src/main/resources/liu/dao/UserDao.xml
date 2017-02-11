@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="liu.dao.UserDao">
+    <resultMap id="User" type="liu.domain.User">
+        <id column="customer_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="customer_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryUserInfoByEmail" resultMap="User" parameterType="java.lang.String">
+        select customer_id,customer_name,email
+        from customer
+        where email= #{email,jdbcType=VARCHAR}
+    </select>
+</mapper>
