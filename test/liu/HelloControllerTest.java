@@ -5,6 +5,7 @@ import liu.spring.RootConfig;
 import liu.spring.WebMvcConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,13 +22,16 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RootConfig.class , WebMvcConfig.class})
+@ContextConfiguration(classes = RootConfig.class)
 @WebAppConfiguration
 public class HelloControllerTest  {
 
+    @Autowired
+    HelloController controller;
+
     @Test
     public void testHelloPage() throws Exception{
-        HelloController controller = new HelloController();
+
         MockMvc mockMvc = standaloneSetup(controller).build();
         mockMvc.perform(get("/hello/world")).andExpect(view().name("hello"));
 
