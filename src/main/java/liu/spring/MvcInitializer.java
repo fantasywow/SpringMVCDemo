@@ -40,4 +40,5 @@ public class MvcInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
+
 }

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/hello")
 public class HelloController {
@@ -22,7 +25,7 @@ public class HelloController {
     private Logger logger = LoggerFactory.getLogger(HelloController.class);
 
     @RequestMapping("/world")
-    public String hello(Model model) {
+    public String hello(Model model, HttpSession session) {
         logger.debug("hell begin");
         String email = "test@test.com";
         String name = userDao.queryUserNameByEmail(email);
@@ -30,6 +33,7 @@ public class HelloController {
 
         model.addAttribute("hello", "您好! " + name);
         model.addAttribute("world", "everything is " + user.getUserId());
+        session.setAttribute(name,user.getUserId());
         return "hello";
     }
 

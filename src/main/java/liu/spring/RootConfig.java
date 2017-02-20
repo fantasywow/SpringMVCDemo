@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -25,6 +26,7 @@ import java.sql.SQLException;
 @Configuration
 @ComponentScan(basePackages = "liu")
 @MapperScan(basePackages = "liu")
+@EnableJdbcHttpSession
 public class RootConfig {
 
     @Bean
@@ -35,15 +37,10 @@ public class RootConfig {
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("db/create-db.sql")
                 .addScript("db/data-db.sql")
+                .addScript("org/springframework/session/jdbc/schema-h2.sql")
                 .build();
+        //jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
         return db;
-
-//        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.h2.Driver");
-//        dataSource.setUrl("jdbc:h2:mem:mydb");
-//        dataSource.setUsername("sa");
-//        dataSource.setPassword("");
-//        return dataSource;
     }
 
     @Bean
@@ -59,9 +56,11 @@ public class RootConfig {
         return sessionFactory;
     }
 
-//    @Bean(initMethod="start",destroyMethod="stop")
-//    public org.h2.tools.Server h2WebConsonleServer () throws SQLException {
-//        return org.h2.tools.Server.createWebServer("-web","-webAllowOthers","-webDaemon","-webPort", "8888");
-//    }
+    @Bean(initMethod="start",destroyMethod="stop")
+    public org.h2.tools.Server h2WebConsonleServer () throws SQLException {
+        return org.h2.tools.Server.createWebServer("-web","-webAllowOthers","-webDaemon","-webPort", "8888");
+
+
+    }
 
 }
