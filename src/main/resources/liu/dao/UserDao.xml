@@ -12,4 +12,10 @@
         from customer
         where email= #{email,jdbcType=VARCHAR}
     </select>
+
+    <select id="queryUserInfoById" resultMap="User" parameterType="java.lang.String">
+        select id,name,email
+        from customer
+        where id= #{id,jdbcType=VARCHAR}
+    </select>
 </mapper>
