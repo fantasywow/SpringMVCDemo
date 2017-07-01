@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping("/hello")
 public class HelloController {
 
@@ -23,17 +25,14 @@ public class HelloController {
 
     private Logger logger = LoggerFactory.getLogger(HelloController.class);
 
-    @RequestMapping("/world")
-    public String hello(Model model, HttpSession session) {
+    @RequestMapping(value = "/world", method = RequestMethod.GET)
+    public User hello(Model model, HttpSession session) {
         logger.debug("hell begin");
         String email = "test@test.com";
         String name = userDao.queryUserNameByEmail(email);
         User user = userDao.queryUserInfoByEmail(email);
 
-        model.addAttribute("hello", "您好! " + name);
-        model.addAttribute("world", "everything is " + user.getUserId());
-        session.setAttribute(name,user.getUserId());
-        return "hello";
+        return user;
     }
 
     @RequestMapping("/test")

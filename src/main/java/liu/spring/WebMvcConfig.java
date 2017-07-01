@@ -1,10 +1,8 @@
 package liu.spring;
 
-import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -14,10 +12,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,41 +34,17 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/css/**").addResourceLocations("/css/");
         registry.addResourceHandler("/img/**").addResourceLocations("/img/");
         registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+        registry.addResourceHandler("/**").addResourceLocations("/");
     }
 
-    // 配置thymeleaf视图解析器,
-    // 保留原有配置
     @Bean
-    public ThymeleafViewResolver thymeleafViewResolver() {
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
-
-
+    public InternalResourceViewResolver internalResourceViewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/jsp/");
+        viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
 
-    //配置模板引擎
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(templateResolver());
-        engine.addDialect(new LayoutDialect());
-        return engine;
-    }
-
-    //配置模板解析器
-    @Bean
-    public TemplateResolver templateResolver() {
-        ClassLoaderTemplateResolver templateResolver;
-        templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setTemplateMode("XHTML");
-        templateResolver.setPrefix("views/");
-        templateResolver.setCharacterEncoding("UTF-8");
-        templateResolver.setSuffix(".html");
-        templateResolver.setCacheable(false); // true by default
-        return templateResolver;
-    }
 
     //定义spring文件上传编码
     @Bean

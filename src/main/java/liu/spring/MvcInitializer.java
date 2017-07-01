@@ -10,6 +10,8 @@ import javax.servlet.ServletRegistration;
  * Created by wtswindows7 on 2017/2/10.
  */
 
+
+//用来替代web.xml
 public class MvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
 
     //配置扫描根路径
