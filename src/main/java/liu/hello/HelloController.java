@@ -3,6 +3,7 @@ package liu.hello;
 /**
  * Created by wtswindows7 on 2017/2/10.
  */
+import io.swagger.annotations.ApiOperation;
 import liu.dao.UserDao;
 import liu.domain.User;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class HelloController {
 
     private Logger logger = LoggerFactory.getLogger(HelloController.class);
 
+    @ApiOperation(value="hello user", notes="test notes")
     @RequestMapping(value = "/world", method = RequestMethod.GET)
     public User hello(Model model, HttpSession session) {
         logger.debug("hell begin");
